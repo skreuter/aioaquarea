@@ -9,6 +9,7 @@ import re
 from typing import Optional
 import urllib.parse
 import html
+import time
 
 import aiohttp
 
@@ -262,6 +263,9 @@ class Client:
 
     async def login(self) -> None:
         """Login to Aquarea and stores a token in the session."""
+        # Library shares credentials with the app. Logging into one logs the other out.
+        # Wait 60 seconds before logging in to ensure a smooth transition.
+        time.sleep(60)
         intent = dt.datetime.now()
         await self._login_lock.acquire()
         try:
